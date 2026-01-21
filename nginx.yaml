@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 1 # Example: run 3 Nginx pods
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: us-central1-docker.pkg.dev/wayfair-test-378605/guac-repo/app:v18
+        ports:
+        - containerPort: 5000
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: "100m" # Request 100 milliCPU (0.1 CPU core)
+            memory: "128Mi" # Request 128 MiB of memory
+          limits:
+            cpu: "250m" # Limit to 500 milliCPU (0.5 CPU core)
+            memory: "256Mi" # Limit to 256 MiB of memory

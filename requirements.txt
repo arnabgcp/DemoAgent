@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+google-cloud-logging
+langchain
+google-cloud-aiplatform
+kubernetes
+pydantic-settings
+flask
+gunicorn
+google-cloud-logging>=3.11.0
