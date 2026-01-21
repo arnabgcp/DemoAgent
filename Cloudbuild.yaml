@@ -1,0 +1,17 @@
+steps:
+  # Step 1: Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/guac-repo/app:$SHORT_SHA', '.']
+
+  # Step 2: Push the image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/guac-repo/app:$SHORT_SHA']
+
+  # Step 3: Deploy to GKE using the gke-deploy builder
+  - name: 'gcr.io/cloud-builders/gke-deploy'
+    args:
+      - run
+      - --filename=kubernetes-manifests/  # Path to your YAML files
+      - --image=us-central1-docker.pkg.dev/$PROJECT_ID/guac-repo/app:$SHORT_SHA
+      - --location=us-central1      # Cluster zone/region
+      - --cluster=cls-test        # GKE cluster name
