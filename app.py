@@ -24,7 +24,7 @@ def home():
 @app.route('/api/items', methods=['GET'])
 def get_items():
     # Return the data as a JSON response
-    return jsonify(sample_items) + test
+    return jsonify(sample_items)
 
 
 @app.route('/error-test', methods=['GET'])
