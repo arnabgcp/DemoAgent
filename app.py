@@ -18,13 +18,13 @@ sample_items = [
 # API Endpoint 1: A simple greeting
 @app.route('/', methods=['GET'])
 def home():
-    return "<p>Hello, World! This is a Flask API V5</p>"
+    return "<p>Hello, World! This is a Flask API V1</p>"
 
 # API Endpoint 2: Return sample data as JSON
 @app.route('/api/items', methods=['GET'])
 def get_items():
     # Return the data as a JSON response
-    return jsonify(sample_items) + sample_var
+    return jsonify(sample_items)
 
 
 @app.route('/error-test', methods=['GET'])
